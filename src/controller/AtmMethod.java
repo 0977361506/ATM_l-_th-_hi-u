@@ -181,7 +181,6 @@ public class AtmMethod {
 		}
 		else {
 			user1.setMoney(user1.getMoney()-k);
-
 		}
 	}
   
@@ -225,7 +224,7 @@ public class AtmMethod {
 	    }
 	    case "3" :{
 	    	transferMoney(scanner, user);
-	    	System.out.println("bạn của muốn tiếp tục sử dụng dịch vụ không ? Bạn chọn y/n ?");
+	    	System.out.println("Giao dich thanh công");
 	    	if(action(scanner)==true) inputMenu(scanner,user);
 	    	else {
 	    		System.out.println("Cám Ơn bạn đã sử dụng dịch vụ");
