@@ -6,24 +6,24 @@ import java.util.Scanner;
 
 import javax.sound.midi.Soundbank;
 
-import model.User;
+import model.Account;
 
 
 public class AtmMethod {
-   public static List<User> addList(){ // lấy danh sách user
-	   List<User> list = new ArrayList<User>(3);
-	   User user1 = new User("lê thế hiếu", "lehieu", "123", 5000000);
-		User user2 = new User("vũ mai lâm", "malams", "123", 600000);
-		User user4 = new User("nguyễn văn trường", "truong", "123", 1000000);
+   public static List<Account> addList(){ // lấy danh sách user
+	   List<Account> list = new ArrayList<Account>(3);
+	   Account user1 = new Account("lê thế hiếu", "lehieu", "123", 5000000,true,true);
+		Account user2 = new Account("vũ mai lâm", "malams", "123", 600000 ,false,true);
+		Account user4 = new Account("nguyễn văn trường", "truong", "123", 1000000,false,false);
 		
 		list.add(user1);
 		list.add(user2);
 		list.add(user4);
 		return list;
    }
-   public static  boolean checkAcount(String nameAccount, String password, List<User> list) {  // check tài khoản
-	   for(User user : list) {
-		   if(user.getAccountName().equals(nameAccount)&&user.getPassword().equals(password)) {
+   public static  boolean checkAcount(String nameAccount, String password, List<Account> list) {  // check tài khoản
+	   for(Account user : list) {
+		   if(user.getAccountName().equals(nameAccount)&&user.getPassword().equals(password)&&user.isRole()==true) {
 			   return true;
 		   }
 		 
@@ -31,8 +31,8 @@ public class AtmMethod {
 	   }
 	   return false;
    }
-   public static  boolean checkAcount1(String nameAccount,List<User> list) {  // check tài khoản
-	   for(User user : list) {
+   public static  boolean checkAcount1(String nameAccount,List<Account> list) {  // check tài khoản
+	   for(Account user : list) {
 		   if(user.getAccountName().equals(nameAccount)) {
 			   return true;
 		   }
@@ -41,9 +41,9 @@ public class AtmMethod {
 	   }
 	   return false;
    }
-   public static User getUser(String nameAccount, String password, List<User> list) { // lấy userkhi đăng nhập thanafh công
-	   User user = null;
-	   for(User users : list) {
+   public static Account getUser(String nameAccount, String password, List<Account> list) { // lấy userkhi đăng nhập thanafh công
+	   Account user = null;
+	   for(Account users : list) {
 		   if(users.getAccountName().equals(nameAccount)&&users.getPassword().equals(password)) {
 			  user = users;
 			 
@@ -57,16 +57,17 @@ public class AtmMethod {
 
 	   }
 	  
-  public static User input(Scanner scanner) {  // nhập
+  public static Account input(Scanner scanner) {  // nhập
 	  int n = 0 ;
-	  User user = new User();
+	  Account user = new Account();
 	  System.out.println("vui lòng nhập tên tài khoản của bạn :");
+	 scanner.nextLine();
 	  String name = scanner.nextLine();
 	  String ten = name.trim();
 	  System.out.println("nhap mật khẩu của bạn");
 	  String pasS = scanner.nextLine();
 	  String pass = pasS.trim();
-	  List<User> list = addList();
+	  List<Account> list = addList();
 	 for(int i = 0 ; i<3 ;i++) {
 		 if(checkAcount(ten,pass, list)) {
 			  user = getUser(name, pasS, list);
@@ -81,11 +82,11 @@ public class AtmMethod {
 	 return user;
   }
   
-  public static void checkMoney(User user) { //check money
+  public static void checkMoney(Account user) { //check money
 	  System.out.println("Tài khoản hiện tại của bạn là : " + user.getMoney());
   }
   
-  public static void putOutMoney(Scanner scanner ,User user) { // rut tiền
+  public static void putOutMoney(Scanner scanner ,Account user) { // rut tiền
 	  System.out.println("nhập số tiền bạn muốn rút :");
 	  int m = 0;
 	  try {
@@ -118,7 +119,7 @@ public class AtmMethod {
   }
   
   public static void menuService(Scanner scanner) {  // menu lưa chọn
-	  User user = input(scanner);
+	  Account user = input(scanner);
 		  StringBuffer menu = new StringBuffer();
 			menu.append("Vui lòng chọn dịch vụ ! Bạn chọn ?").append("\n")
 			.append("1.Kiem tra so du").append("\n")
@@ -128,8 +129,8 @@ public class AtmMethod {
 	    inputMenu(scanner, user);
 	
   }
-  public static  boolean checkAcountToTransfer(String nameAccount, List<User> list,String account2) {  // check tài khoản
-	   for(User user : list) {
+  public static  boolean checkAcountToTransfer(String nameAccount, List<Account> list,String account2) {  // check tài khoản
+	   for(Account user : list) {
 		   if(user.getAccountName().equals(nameAccount)&& !user.getAccountName().equals(account2)) {
 			   return true;
 		   }
@@ -138,9 +139,9 @@ public class AtmMethod {
 	   return false;
   }
   
-  public static  User AcountToTransfer(String nameAccount, List<User> list) {  // check tài khoản
-	  User user = new User();
-	   for(User users : list) {
+  public static  Account AcountToTransfer(String nameAccount, List<Account> list) {  // check tài khoản
+	  Account user = new Account();
+	   for(Account users : list) {
 		   if(users.getAccountName().equals(nameAccount)) {
 			  user= users;
 			  return user;
@@ -153,9 +154,9 @@ public class AtmMethod {
  }
   
   
-  public static void transferMoney(Scanner scanner , User user1) {
-	  List<User> list = addList();
-	  User user2 = new User();
+  public static void transferMoney(Scanner scanner , Account user1) {
+	  List<Account> list = addList();
+	  Account user2 = new Account();
 	  int k = 0 ;
 	  System.out.println("nhập Account bạn muốn chuyển");
 	  String name = scanner.nextLine();
@@ -185,7 +186,7 @@ public class AtmMethod {
 	}
   
   
-  public static void inputMenu(Scanner scanner ,User user) { // nhâp menu 
+  public static void inputMenu(Scanner scanner ,Account user) { // nhâp menu 
 
 	  int n = 0 ;
 	  String select = null;
